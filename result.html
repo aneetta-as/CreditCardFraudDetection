@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+            CreditSecure
+        </div>
+
+        <nav class="nav">
+            <a href="/">Home</a>
+            <a href="/predict">Check Transaction</a>
+        </nav>
+
+    </header>
+
+
+    <section class="result-page">
+
+        <div class="result-card">
+
+            {% if result == "Fraud" %}
+
+                <div class="result-icon fraud">
+                    ⚠
+                </div>
+
+                <h1 class="fraud-text">
+                    Suspicious Transaction
+                </h1>
+
+            {% else %}
+
+                <div class="result-icon genuine">
+                    ✓
+                </div>
+
+                <h1 class="genuine-text">
+                    Transaction Appears Genuine
+                </h1>
+
+            {% endif %}
+
+
+            <p class="result-message">
+                {{ message }}
+            </p>
+
+
+            <div class="probability-box">
+
+                <span>
+                    Fraud Probability
+                </span>
+
+                <strong>
+                    {{ probability }}%
+                </strong>
+
+            </div>
+
+
+            <div class="result-buttons">
+
+                <a href="/predict"
+                   class="button">
+                    Check Another Transaction
+                </a>
+
+                <a href="/"
+                   class="button secondary">
+                    Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

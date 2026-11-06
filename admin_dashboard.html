@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - CreditSecure</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+            CreditSecure
+        </div>
+
+        <nav class="nav">
+            <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+
+    </header>
+
+
+    <main class="dashboard">
+
+        <div class="dashboard-header">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Welcome, {{ session["admin_name"] }}
+            </p>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats-container">
+
+            <div class="stat-card">
+
+                <h3>Total Transactions</h3>
+
+                <p>
+                    {{ total_transactions }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card fraud-stat">
+
+                <h3>Fraud Transactions</h3>
+
+                <p>
+                    {{ fraud_transactions }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card genuine-stat">
+
+                <h3>Genuine Transactions</h3>
+
+                <p>
+                    {{ genuine_transactions }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRANSACTIONS -->
+
+        <div class="transaction-section">
+
+            <h2>Recent Transactions</h2>
+
+            {% if transactions %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>State</th>
+                            <th>Prediction</th>
+                            <th>Probability</th>
+                            <th>Date</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for transaction in transactions %}
+
+                        <tr>
+
+                            <td>
+                                {{ transaction[0] }}
+                            </td>
+
+                            <td>
+                                ₹{{ transaction[1] }}
+                            </td>
+
+                            <td>
+                                {{ transaction[2] }}
+                            </td>
+
+                            <td>
+                                {{ transaction[3] }}
+                            </td>
+
+                            <td>
+
+                                {% if transaction[4] == "Fraud" %}
+
+                                <span class="status-fraud">
+                                    Fraud
+                                </span>
+
+                                {% else %}
+
+                                <span class="status-genuine">
+                                    Genuine
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ transaction[5] }}%
+                            </td>
+
+                            <td>
+                                {{ transaction[6] }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <h3>No transactions found</h3>
+
+                <p>
+                    There are currently no transactions in the system.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Fraud Alerts - CreditSecure</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+            CreditSecure
+        </div>
+
+        <nav class="nav">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/predict">
+                Check Transaction
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/alerts">
+                Fraud Alerts
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <section class="dashboard">
+
+        <h1>Fraud Alerts</h1>
+
+        <p>
+            Review suspicious transactions detected
+            by the fraud detection system.
+        </p>
+
+
+        {% if alerts %}
+
+        <div class="transaction-section">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Alert ID</th>
+                        <th>Transaction ID</th>
+                        <th>Fraud Probability</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for alert in alerts %}
+
+                    <tr>
+
+                        <td>{{ alert[0] }}</td>
+
+                        <td>{{ alert[1] }}</td>
+
+                        <td>{{ alert[2] }}%</td>
+
+                        <td>{{ alert[3] }}</td>
+
+                        <td>{{ alert[4] }}</td>
+
+                        <td>{{ alert[5] }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="card">
+
+            <h3>No Fraud Alerts</h3>
+
+            <p>
+                No suspicious transactions have been
+                detected for your account.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</body>
+
+</html>

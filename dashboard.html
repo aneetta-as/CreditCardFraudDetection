@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - CreditSecure</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header class="header">
+
+        <div class="logo">
+            CreditSecure
+        </div>
+
+        <nav class="nav">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/predict">
+                Check Transaction
+            </a>
+
+            <a href="/alerts">
+                Fraud Alerts
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Dashboard -->
+
+    <section class="dashboard">
+
+        <div class="dashboard-header">
+
+            <h1>
+                Welcome, {{ user_name }}!
+            </h1>
+
+            <p>
+                Monitor your transactions and
+                fraud detection results.
+            </p>
+
+        </div>
+
+
+        <!-- Dashboard Actions -->
+
+        <div class="dashboard-actions">
+
+            <a href="/predict" class="button">
+                Check Transaction
+            </a>
+
+            <a href="/alerts" class="button">
+                Fraud Alerts
+            </a>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="stats-container">
+
+            <div class="stat-card">
+
+                <h3>
+                    Total Transactions
+                </h3>
+
+                <p>
+                    {{ total_transactions }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card fraud-stat">
+
+                <h3>
+                    Fraudulent Transactions
+                </h3>
+
+                <p>
+                    {{ fraud_transactions }}
+                </p>
+
+            </div>
+
+
+            <div class="stat-card genuine-stat">
+
+                <h3>
+                    Genuine Transactions
+                </h3>
+
+                <p>
+                    {{ genuine_transactions }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Recent Transactions -->
+
+        <div class="transaction-section">
+
+            <h2>
+                Recent Transactions
+            </h2>
+
+
+            {% if transactions %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Transaction ID
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Result
+                            </th>
+
+                            <th>
+                                Fraud Probability
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for transaction in transactions %}
+
+                        <tr>
+
+                            <td>
+                                {{ transaction[0] }}
+                            </td>
+
+                            <td>
+                                ₹{{ transaction[1] }}
+                            </td>
+
+                            <td>
+                                {{ transaction[2] }}
+                            </td>
+
+                            <td>
+
+                                {% if transaction[3] == "Fraud" %}
+
+                                <span class="status-fraud">
+                                    Fraud
+                                </span>
+
+                                {% else %}
+
+                                <span class="status-genuine">
+                                    Genuine
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ transaction[4] }}%
+                            </td>
+
+                            <td>
+                                {{ transaction[5] }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <h3>
+                    No transactions found
+                </h3>
+
+                <p>
+                    Your transaction history will
+                    appear here after you check a
+                    transaction.
+                </p>
+
+                <a href="/predict" class="button">
+                    Check Your First Transaction
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
